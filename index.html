@@ -1,54 +1,380 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Het Vaghasiya | Portfolio</title>
+  <meta name="theme-color" content="#08090d">
+  <meta name="description" content="Het Vaghasiya's creative portfolio featuring photography, photo editing, video production, colour grading and AI-assisted creative experiments.">
+  <title>Het Vaghasiya | Creative Portfolio</title>
   <style>
+    :root {
+      --bg: #08090d;
+      --panel: #11131b;
+      --text: #f5f6fa;
+      --muted: #a5a9b8;
+      --accent: #76f2d0;
+      --line: rgba(255,255,255,.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #080b16, #25204a, #164b50);
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
+      background:
+        radial-gradient(ellipse at 80% 5%, #193c3a 0, transparent 30%),
+        radial-gradient(ellipse at 10% 35%, #222044 0, transparent 32%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      line-height: 1.6;
     }
-    .card {
-      max-width: 650px;
-      margin: 40px auto;
-      padding: 35px 20px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 25px;
-      backdrop-filter: blur(20px);
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1120px, 90%); margin: auto; }
+    .accent { color: var(--accent); }
+    .muted { color: var(--muted); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(8,9,13,.86);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
     }
-    h1 { font-size: 42px; }
-    span { color: #70f0d6; }
-    p { color: #d4d9ed; line-height: 1.8; }
-    a {
-      display: inline-block;
-      margin: 8px;
+    nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand { font-weight: 800; letter-spacing: 1px; }
+    .navlinks { display: flex; gap: 22px; font-size: 14px; color: var(--muted); }
+    .navlinks a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 82vh;
+      display: grid;
+      align-content: center;
+      padding: 90px 0;
+    }
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: clamp(44px, 9vw, 90px);
+      line-height: .99;
+      letter-spacing: -4px;
+      margin: 20px 0;
+    }
+    h2 { font-size: clamp(30px, 5vw, 48px); line-height: 1.1; margin: 10px 0 16px; }
+    h3 { margin: 8px 0; }
+    .hero p { max-width: 640px; color: var(--muted); font-size: 18px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
       padding: 12px 20px;
-      border-radius: 25px;
-      background: #70f0d6;
-      color: #101526;
-      text-decoration: none;
-      font-weight: bold;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .btn.primary { background: var(--accent); color: #07110f; border-color: var(--accent); font-weight: 800; }
+    .btn:hover { transform: translateY(-2px); }
+
+    section { padding: 76px 0; border-top: 1px solid var(--line); }
+    .section-head { max-width: 680px; margin-bottom: 28px; }
+    .section-head p { color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      transition: transform .2s, border-color .2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(118,242,208,.5); }
+    .symbol { font-size: 28px; }
+    .card p { color: var(--muted); margin-bottom: 0; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 13px;
+      color: #e5e7ee;
+      background: rgba(255,255,255,.04);
+    }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 9px; margin: 20px 0; }
+    .filter {
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      padding: 8px 13px;
+      cursor: pointer;
+    }
+    .filter.active, .filter:hover {
+      background: var(--accent);
+      color: #07110f;
+      border-color: var(--accent);
+    }
+    .project {
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.82)),
+        radial-gradient(circle at 75% 25%, #315d58, #222039 45%, #12131b);
+    }
+    .project p { font-size: 14px; }
+    .project[hidden] { display: none; }
+    .project-label { font-size: 11px; letter-spacing: 1.5px; color: var(--accent); text-transform: uppercase; }
+
+    .about-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
+    .note { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; color: var(--muted); }
+    .contact-box { text-align: center; padding: 36px 22px; }
+
+    footer { padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+    @media (max-width: 760px) {
+      .navlinks { gap: 12px; font-size: 12px; flex-wrap: wrap; justify-content: flex-end; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .about-layout { grid-template-columns: 1fr; }
+      h1 { letter-spacing: -2px; }
+      section { padding: 58px 0; }
+    }
+    @media (max-width: 480px) {
+      nav { align-items: flex-start; padding: 15px 0; }
+      .navlinks { max-width: 210px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding: 80px 0; }
+      .hero p { font-size: 16px; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <p>PHOTOGRAPHY · PHOTO EDITING · VIDEO</p>
-    <h1>HET <span>VAGHASIYA</span></h1>
-    <h2>Creative Portfolio</h2>
-    <p>
-      Cinematic photography, portrait retouching,
-      colour grading, wedding films and Instagram Reels.
-    </p>
-    <a href="#work">Explore My Work</a>
-    <a href="mailto:your.email@example.com">Contact Me</a>
-    <p id="work">More creative work coming soon.</p>
-  </div>
+  <header>
+    <nav class="container">
+      <a class="brand" href="#home">HET<span class="accent">.</span></a>
+      <div class="navlinks">
+        <a href="#skills">Skills</a>
+        <a href="#work">My Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div class="eyebrow">Creative Multimedia Portfolio</div>
+      <h1>HET<br><span class="accent">VAGHASIYA</span></h1>
+      <h2>Visuals with <span class="accent">feeling.</span></h2>
+      <p>
+        Exploring photography, video production, photo editing,
+        colour grading and AI-assisted creative workflows.
+        A collection of my skills, experiments and personal projects.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#work">Explore My Work ↘</a>
+        <a class="btn" href="#contact">Get in Touch</a>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">What I Do</div>
+          <h2>Skills & <span class="accent">Creative Tools</span></h2>
+          <p>Creative areas I am learning, practising and exploring through personal projects.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="symbol">📷</div><h3>Photography</h3><p>Photo shoots, framing, composition and visual storytelling.</p></article>
+          <article class="card"><div class="symbol">🎨</div><h3>Photo Editing</h3><p>Retouching, image enhancement and creative photo manipulation.</p></article>
+          <article class="card"><div class="symbol">🎬</div><h3>Video Shooting</h3><p>Capturing footage and exploring cinematic visual techniques.</p></article>
+          <article class="card"><div class="symbol">✂️</div><h3>Video Editing</h3><p>Editing practice, short-form videos, Reels and storytelling.</p></article>
+          <article class="card"><div class="symbol">🌈</div><h3>Colour Grading</h3><p>Exploring colour, mood and cinematic looks for photos and videos.</p></article>
+          <article class="card"><div class="symbol">✨</div><h3>AI-Assisted Creativity</h3><p>Experimenting with AI tools to support visual ideas and creative workflows.</p></article>
+        </div>
+
+        <div style="margin-top:32px">
+          <h3>Editing & Production Software</h3>
+          <div class="tags">
+            <span class="tag">CapCut</span>
+            <span class="tag">Adobe Premiere Pro</span>
+            <span class="tag">Adobe After Effects</span>
+            <span class="tag">Adobe Photoshop</span>
+            <span class="tag">Adobe Lightroom</span>
+            <span class="tag">DaVinci Resolve</span>
+            <span class="tag">Final Cut Pro</span>
+            <span class="tag">Canva</span>
+            <span class="tag">Other tools</span>
+          </div>
+          <p class="muted">Tools listed reflect my creative toolkit and learning interests; proficiency varies by tool.</p>
+        </div>
+
+        <div style="margin-top:26px">
+          <h3>AI Tools I Explore</h3>
+          <div class="tags">
+            <span class="tag">Adobe Firefly</span>
+            <span class="tag">Gemini</span>
+            <span class="tag">Runway</span>
+            <span class="tag">Kling AI</span>
+            <span class="tag">Other AI tools</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Selected Projects</div>
+          <h2>My Creative <span class="accent">Work</span></h2>
+          <p>Replace these sample cards with your real photos, videos and project details before sharing your portfolio.</p>
+        </div>
+        <div class="filters" aria-label="Filter projects">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="photo">Photography</button>
+          <button class="filter" data-filter="edit">Photo Editing</button>
+          <button class="filter" data-filter="video">Video</button>
+          <button class="filter" data-filter="ai">AI Experiments</button>
+        </div>
+        <div class="grid" id="projectGrid">
+          <article class="card project" data-category="photo">
+            <div class="project-label">Photography</div>
+            <h3>Your Photo Shoot</h3>
+            <p>Add one of your own photographs and a short description here.</p>
+          </article>
+          <article class="card project" data-category="edit">
+            <div class="project-label">Photo Editing</div>
+            <h3>Before & After</h3>
+            <p>Add your original and edited images to demonstrate your process.</p>
+          </article>
+          <article class="card project" data-category="video">
+            <div class="project-label">Video Editing</div>
+            <h3>Your Video / Reel</h3>
+            <p>Add a link to a video you created or edited.</p>
+          </article>
+          <article class="card project" data-category="video">
+            <div class="project-label">Colour Grading</div>
+            <h3>Your Colour Grade</h3>
+            <p>Show your own footage before and after colour grading.</p>
+          </article>
+          <article class="card project" data-category="ai">
+            <div class="project-label">AI-Assisted Work</div>
+            <h3>Your AI Experiment</h3>
+            <p>Show an actual creative experiment and mention how AI helped.</p>
+          </article>
+          <article class="card project" data-category="edit">
+            <div class="project-label">Creative Editing</div>
+            <h3>Your Editing Project</h3>
+            <p>Add a real project, the tools used and the creative goal.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-layout">
+        <div>
+          <div class="eyebrow">A Little About Me</div>
+          <h2>Curious mind.<br><span class="accent">Creative vision.</span></h2>
+          <p class="muted">
+            I am Het Vaghasiya, a creative learner building my skills in
+            photography, photo editing, video production and visual storytelling.
+            I also explore AI tools as part of my creative process.
+          </p>
+          <p class="muted">
+            This portfolio is a space to present my personal projects,
+            share what I am learning and document my creative progress.
+          </p>
+        </div>
+        <div class="card">
+          <h3>My Approach</h3>
+          <p class="note">Learn by creating, experiment with new tools, refine the details and keep improving with every project.</p>
+          <h3 style="margin-top:24px">Current Focus</h3>
+          <div class="tags">
+            <span class="tag">Personal Projects</span>
+            <span class="tag">Visual Storytelling</span>
+            <span class="tag">Creative Editing</span>
+            <span class="tag">AI Experiments</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <div class="container">
+        <div class="card contact-box">
+          <div class="eyebrow">Resume & Profile</div>
+          <h2>Let's make something <span class="accent">meaningful.</span></h2>
+          <p class="muted">Add your real resume PDF and professional links here when they are ready.</p>
+          <!-- Replace # with your uploaded resume PDF link when available. -->
+          <a class="btn" href="#contact">Resume coming soon</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="card contact-box">
+          <div class="eyebrow">Contact</div>
+          <h2>Have a creative idea?</h2>
+          <p class="muted">Add your real email and social links below so clients can contact you.</p>
+          <!-- Replace the placeholder below with your real email address. -->
+          <div class="actions" style="justify-content:center">
+            <a class="btn primary" href="mailto:your-email@example.com">Email Me</a>
+            <!-- Add your real social profile URLs when ready. -->
+          </div>
+          <p class="muted" style="font-size:13px">Instagram · LinkedIn · YouTube — links to be added</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© <span id="year"></span> Het Vaghasiya</span>
+      <span>Made with creativity & continuous learning.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const filterButtons = document.querySelectorAll(".filter");
+    const projects = document.querySelectorAll(".project");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+
+        projects.forEach(project => {
+          project.hidden = filter !== "all" &&
+            project.dataset.category !== filter;
+        });
+      });
+    });
+  </script>
 </body>
 </html>
